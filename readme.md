@@ -1,4 +1,4 @@
-Crosspost
+CrossPost
 =========
 
 A Python/Flask web applicationt that posts to both Facebook and Twitter (via email to IFTTT). Authentication is done via LDAP (so you'll need access to an LDAP server).

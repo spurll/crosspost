@@ -1,0 +1,63 @@
+<html>
+    <head>
+		<!-- Support for iOS device sizes. -->
+		<meta name="viewport" content="width=device-width">
+
+		{% if title %}
+			<title>{{title}}</title>
+		{% endif %}
+
+		<style type="text/css">
+			.text { font-family: serif; }
+			.window { width: 400px; margin: auto; }
+			.title { font-family: serif; font-variant: small-caps; font-size: 150%; text-align: center; padding-top: 5px; padding-bottom: 10px; margin: auto; height: 30px; width: 400px; }
+			.heading { font-family: serif; font-variant: small-caps; text-align: center; padding-top: 5px; padding-bottom: 10px; }
+			.user { font-family: serif; text-align: right; padding-top: 20px; padding-right: 30px; position: fixed; width: 20%; right: 0px; top: 0px; }
+			.messages { font-style: italic; text-align: center; }
+			.section { padding-top: 5px; padding-bottom: 10px; }
+
+			.wide { width: 65%; top: 0px; }
+			.narrow { width: 35%; top: 0px; }
+			.right { float: right; text-align: right; }
+
+			a:link { text-decoration: none; color: #888888; }
+			a:visited { text-decoration: none; color: #888888; }
+			a:hover { text-decoration: none; color: #ffffff; }
+			a:active { text-decoration: none; color: #888888; }
+
+			body { color: #ffffff; background-color: #222222; overflow-y:auto; }
+
+			input[type="text"] { width: 100%; }
+			input[type="password"] { width: 100%; }
+			input { color: #000000; }
+		</style>
+		<link rel="shortcut icon" href="/static/lunch.png"/>
+    </head>
+
+	<body>
+		{% if user %}
+			<div class="user">
+				Logged in as {{user.name}}. <a href="{{ url_for('logout') }}">Log out.</a>
+			</div>
+		{% endif %}
+
+		{% if title %}
+			<div class="title">{{title}}</div>
+		{% endif %}
+
+		{% with messages = get_flashed_messages() %}
+			<div class="messages">
+				{% if messages %}
+					{% for message in messages %}
+						<p>{{ message }}</p>
+					{% endfor %}
+				{% endif %}
+			</div>
+		{% endwith %}
+
+		<div class="window">
+			{% block content %}
+			{% endblock %}
+		</div>
+	</body>
+</html>

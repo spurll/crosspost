@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="text">
+		<form action="" method="POST" name="login">
+			{{form.hidden_tag()}}
+
+			<div>{{form.text(autofocus=True)}}</div>
+			<div class="narrow left">{{form.fb}} {{form.fb.label}}</div>
+			<div class="narrow left">{{form.twitter}} {{form.twitter.label}}</div>
+			<div class="wide right"><input type="submit" value="Post"></div>
+		</form>
+	</div>
+{% endblock %}
+
