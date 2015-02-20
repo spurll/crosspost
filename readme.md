@@ -9,9 +9,10 @@ Usage
 Requirements
 ------------
 
-* flask (0.10)
+* flask
 * flask-login
-* python-ldap
+* flask-wtf
+* ldap3
 
 Configuration
 -------------
@@ -52,7 +53,7 @@ None
 Known Bugs
 ----------
 
-None
+The "Remember Me" option on the login page doesn't seem to work anymore.
 
 License Information
 ===================
