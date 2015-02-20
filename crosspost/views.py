@@ -104,11 +104,11 @@ def post(text, fb=False, twitter=False):
         mailbox.send(RECIPIENTS, text, '#twitter')
 
     if fb:
-        match = next(re.finditer(LINK_PATTERN, text, flags=re.IGNORECASE))
+        match = re.findall(LINK_PATTERN, text, flags=re.IGNORECASE)
 
         if match:
             # If there's a link at the end of the text, remove it.
-            link = match.group(0)
+            link = match[-1]
             if text.endswith(link):
                 text = text[:-len(link)]
             mailbox.send(RECIPIENTS, text, '#fblink '+link)

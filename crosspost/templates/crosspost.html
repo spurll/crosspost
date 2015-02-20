@@ -1,14 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
+	<script type="text/javascript" src="/static/jquery-2.1.1.js"></script>
+
 	<div class="text">
 		<form action="" method="POST" name="login">
 			{{form.hidden_tag()}}
 
 			<div>{{form.text(autofocus=True)}}</div>
+			<div class="wide right" id="count"></div>
 			<div class="narrow left">{{form.fb}} {{form.fb.label}}</div>
-			<div class="narrow left">{{form.twitter}} {{form.twitter.label}}</div>
 			<div class="wide right"><input type="submit" value="Post"></div>
+			<div class="narrow left">{{form.twitter}} {{form.twitter.label}}</div>
 		</form>
 	</div>
+
+	<script type="text/javascript">
+		$('#text').keyup(function () {
+			var max = 140;
+			var len = $(this).val().length;
+			var char = max - len;
+			if (len > max) {
+				$('#count').text(-char + ' characters over.');
+				$('#count').css('color', 'red');
+			} else {
+				$('#count').text(char + ' characters remaining.');
+				$('#count').css('color', '');
+			}
+		});
+	</script>
 {% endblock %}
 
