@@ -17,23 +17,7 @@ Requirements
 Configuration
 -------------
 
-You'll need to create a file called `config.py` containing authentication information for your email account (if using two-factor authentication via Gmail, remember to use an application-specific password). It should also include LDAP server information and the LDAP ID of the user who is permitted to use this application (in case you're using a shared LDAP server). It should look something like this:
-
-```python
-from os import urandom
-
-USERNAME = 'you@gmail.com'
-PASSWORD = 'your very long and presumably sensible password'
-SMTPHOST = 'smtp.gmail.com:587'
-
-LDAP_USER = 'your.user.id'
-LDAP_URI = 'ldap://your.ldap.server'
-LDAP_SEARCH_BASE = 'ou=something,dc=something,dc=ca'    # Consult LDAP admin.
-
-CSRF_ENABLED = True
-SECRET_KEY = urandom(30)
-PROPAGATE_EXCEPTIONS = True
-```
+You'll need to create a file called `config.py` containing authentication information for your email account (if using two-factor authentication via Gmail, remember to use an application-specific password). It should also include LDAP server information and the LDAP ID of the user who is permitted to use this application (in case you're using a shared LDAP server). A sample configuration file can be found at `sample_config.py`.
 
 Before using, you'll also need to create an IFTTT account and set up email rules to handle posting to Twitter (using hashtag #twitter), Facebook (using hashtag #facebook), and Facebook links (using hashtag #fblink). This is fairly straightforward.
 
@@ -53,7 +37,7 @@ None
 Known Bugs
 ----------
 
-The "Remember Me" option on the login page doesn't seem to work anymore.
+None
 
 License Information
 ===================
