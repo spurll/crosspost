@@ -12,7 +12,7 @@
 			.heading { font-family: serif; font-variant: small-caps; text-align: center; padding-top: 5px; padding-bottom: 10px; }
 			.messages { font-style: italic; text-align: center; }
 
-			#content { width: 500px; margin: auto; padding-top: 10px; }
+			#content { width: 100%; max-width: 500px; margin: auto; padding-top: 10px; }
 
 			#title-buffer {
 				width: 100%;
@@ -83,10 +83,7 @@
 			function resizeContent() {
 				// http://stackoverflow.com/questions/1248081/get-the-browser-viewport-dimensions-with-javascript
 				var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-				if (width < document.getElementById('content').offsetWidth) {
-					// Resizes the content window to be smaller if viewed on a small screen.
-					document.getElementById('content').style.width = width;
-
+				if (width < 500) {
 					// Moves and resizes the login information on a smaller screen.
 					document.getElementById('user').style.width = 'auto';
 					document.getElementById('user').style.margin = 'auto';
