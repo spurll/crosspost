@@ -8,7 +8,7 @@ from crosspost.authenticate import authenticate, load_user_info
 from crosspost.mailbox import Mailbox
 
 
-RECIPIENTS = ['trigger@recipe.ifttt.com']
+RECIPIENTS = ['trigger@applet.ifttt.com']
 
 # From http://www.regexguru.com/2008/11/detecting-urls-in-a-block-of-text/
 LINK_PATTERN = (r'\b(?:(?:https?|ftp|file)://|www\.|ftp\.)(?:\([-A-Z0-9+&@#/%='
