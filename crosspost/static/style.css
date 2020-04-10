@@ -1,0 +1,15 @@
+#content {
+    max-width: 500px;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.right { float: right; text-align: right; }
+
+input[type="checkbox"] {
+    margin-left: 0;
+}

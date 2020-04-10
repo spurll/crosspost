@@ -1,126 +1,61 @@
 <html>
     <head>
-		<!-- Support for iOS device sizes. -->
-		<meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no'>
+        <!-- Support for iOS device sizes. -->
+        <meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no'>
 
-		{% if title %}
-			<title>{{title}}</title>
-		{% endif %}
+        {% if title %}
+        <title>{{ title }}</title>
+        {% endif %}
 
-		<style type="text/css">
-			.heading { font-variant: small-caps; text-align: center; padding-top: 5px; padding-bottom: 10px; }
-			.messages { font-style: italic; text-align: center; }
+        <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='common.css') }} />
+        <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='style.css') }} />
+        <link rel="shortcut icon" href={{ url_for('static', filename='fbt.png') }} />
 
-			#content { width: 100%; max-width: 500px; margin: auto; padding-top: 10px; }
-
-			#title-buffer {
-				width: 100%;
-				height: 52px;
-				top: 0px;
-				position: static;
-			}
-
-			#title-bar {
-				width: 100%;
-				top: 0px;
-				position: fixed;
-				background-color: #111111;
-				border-bottom: solid #444444;
-			}
-
-			#title {
-				width: 60%;
-				margin: auto;
-				font-variant: small-caps;
-				font-size: 200%;
-				text-align: center;
-				padding-top: 10px;
-				padding-bottom: 10px;
-			}
-
-			#user {
-				width: calc(20% - 20px);
-				float: right;
-				text-align: right;
-				padding: 10px;
-			}
-
-			.wide { width: 60%; top: 0px; }
-			.narrow { width: 40%; top: 0px; }
-			.right { float: right; text-align: right; }
-			.login { max-width: 320px; margin: auto; }
-
-			a:link { text-decoration: none; color: #888888; }
-			a:visited { text-decoration: none; color: #888888; }
-			a:hover { text-decoration: none; color: #ffffff; }
-			a:active { text-decoration: none; color: #888888; }
-
-			body { color: #ffffff; background-color: #222222; overflow-y: auto; margin: 0px; font-family: serif; }
-
-			textarea { width: 100%; height: 100px; color: #ffffff; background-color: transparent; border: solid 1px #444444; }
-			input { color: #ffffff; background-color: transparent; border: solid 1px #444444; }
-			input[type="text"] { width: 100%; }
-			input[type="password"] { width: 100%; }
-		</style>
-
-		<link rel="shortcut icon" href="{{url_for('static', filename='fbt.png')}}"/>
-
-		<script>
-			document.addEventListener("DOMContentLoaded", function(event) {
-				resizeContent();
-				resizeBuffer();
-			});
-
-			window.onresize = function() {
-				resizeBuffer();
-			};
-
-			function resizeBuffer() {
-				// Resizes the title buffer which pushes content down below the floating title bar.
-				document.getElementById('title-buffer').style.height = document.getElementById('title-bar').offsetHeight + 'px';
-			}
-
-			function resizeContent() {
-				// http://stackoverflow.com/questions/1248081/get-the-browser-viewport-dimensions-with-javascript
-				var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-				if (width < 500) {
-					// Moves and resizes the login information on a smaller screen.
-					document.getElementById('user').style.width = 'auto';
-					document.getElementById('user').style.margin = 'auto';
-					document.getElementById('user').style.padding = '2px';
-					document.getElementById('user').style.float = 'none';
-					document.getElementById('user').style.textAlign = 'center';
-					document.getElementById('title').style.padding = '2px';
-				}
-			}
-		</script>
+        <script type="text/javascript" src={{ url_for('static', filename='jquery-3.1.0.min.js') }}></script>
     </head>
 
-	<body>
-		<div id="title-buffer"></div>
-		<div id="title-bar">
-			<div id="user">
-				{% if user %}
-					Logged in as {{user.name}}. <a href="{{ url_for('logout') }}">Log out.</a>
-				{% endif %}
-			</div>
+    <body>
+        <div id="title-buffer"></div>
+        <div id="title-bar" class="flex-container">
+            <div id="links" class="flex-box">
+                <span>
+                    {% if link %}
+                    <a class="button" href={{ link['url'] }}>{{ link['text'] }}</a>
+                    {% endif %}
+                </span>
+            </div>
 
-			<div id="title">{{title}}</div>
-		</div>
+            <div id="title" class="flex-box">
+                <a href={{ url_for('index') }}>{{ title }}</a>
+            </div>
 
-		{% with messages = get_flashed_messages() %}
-			<div class="messages">
-				{% if messages %}
-					{% for message in messages %}
-						<p>{{ message }}</p>
-					{% endfor %}
-				{% endif %}
-			</div>
-		{% endwith %}
+            <div id="user" class="flex-box">
+                <span>
+                    {% if not hide_user %}
+                    {% if user and user.is_authenticated %}
+                    <span id="current-user">Logged in as {{ user.name }}.</span>
+                    <span><a class="button" title="Logged in as {{ user.name }}." href={{ url_for('logout') }}>Log Out</a></span>
+                    {% else %}
+                    <a class="button" href={{ url_for('login', next=url_for(request.endpoint, **dict(request.view_args))) }}>Log In</a>
+                    {% endif %}
+                    {% endif %}
+                </span>
+            </div>
+        </div>
 
-		<div id="content">
-			{% block content %}
-			{% endblock %}
-		</div>
-	</body>
+        {% with messages = get_flashed_messages() %}
+        <div class="messages">
+            {% if messages %}
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        {% endwith %}
+
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
 </html>
