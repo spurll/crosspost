@@ -36,8 +36,7 @@ def post():
             return redirect(url_for('index'))
 
         else:
-            print('Unable to validate. Errors: {}'.format(form.errors))
-            flash('Unable to validate. Errors: {}'.format(form.errors))
+            flash_errors(form)
 
     return render_template('crosspost.html', title='CrossPost', user=g.user,
                            form=form)
@@ -115,3 +114,15 @@ def post(text, fb=False, twitter=False):
 
         else:
             mailbox.send(RECIPIENTS, text, '#facebook')
+
+
+def flash_errors(form):
+    for field, messages in form.errors.items():
+        label = getattr(getattr(getattr(form, field), 'label'), 'text', '')
+        label = label.replace(':', '')
+        error = ', '.join(messages)
+
+        message = f'Error in {label}: {error}' if label else 'Error: {error}'
+
+        flash(message)
+        print(message)
